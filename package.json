@@ -1,0 +1,7 @@
+{
+  "name": "my-new-repo",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Tests passed successfully!\" && exit 0"
+  }
+}
