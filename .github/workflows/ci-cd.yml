@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. מוריד את הקוד העדכני (Checkout)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. הגדרת סביבת Node.js (או כל טכנולוגיה מועדפת אחרת)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. מתקין תלויות חיצוניות
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. מריץ Tests
+      - name: Run tests
+        run: npm test
+
+      # 5. רץ אך ורק כאשר מתבצע push לענף main (בניית Container והדפסת Deploying)
+      - name: Build Container Image & Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Building Container Image..."
+          # כאן אפשר לשלב פקודות כמו docker build
+          echo "Deploying"
